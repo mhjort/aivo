@@ -3,3 +3,5 @@ obj/
 bin/
 *.nupkg
 *.user
+src/.idea/
+src/src.sln.DotSettings
