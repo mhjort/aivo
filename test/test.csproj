@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -48,6 +48,10 @@
   <ItemGroup>
     <ProjectReference Include="..\aivo.csproj">
       <Project>{9593E956-9720-48E4-B1C3-6A906AAEE949}</Project>
+      <Name>aivo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\aivo.csproj">
+      <Project>{9593e956-9720-48e4-b1c3-6a906aaee949}</Project>
       <Name>aivo</Name>
     </ProjectReference>
   </ItemGroup>

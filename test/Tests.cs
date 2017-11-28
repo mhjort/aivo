@@ -34,6 +34,22 @@ namespace Test
             var sequence = new SequenceNode<MyModel>(new SucceedingNode(), new SucceedingNode());
             Assert.AreEqual(AivoTreeStatus.Success, sequence.Tick(1, model));
         }
+        
+        [Test]
+        public void SelectorNodeSucceedSWithFirstSucceedingNode()
+        {
+            var model = new MyModel();
+            var sequence = new SelectorNode<MyModel>(new SucceedingNode(), new ShouldNotRunNode());
+            Assert.AreEqual(AivoTreeStatus.Success, sequence.Tick(1, model));
+        }
+        
+        [Test]
+        public void SelectorNodeFailsIfAllNodesFails()
+        {
+            var model = new MyModel();
+            var sequence = new SelectorNode<MyModel>(new FailingNode());
+            Assert.AreEqual(AivoTreeStatus.Failure, sequence.Tick(1, model));
+        }
     }
 
     public class MyModel

@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="ActionNode.cs" />
     <Compile Include="AivoTreeStatus.cs" />
+    <Compile Include="SelectorNode.cs" />
     <Compile Include="SequenceNode.cs" />
     <Compile Include="TreeNode.cs" />
   </ItemGroup>
