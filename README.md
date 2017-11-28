@@ -3,7 +3,7 @@ C# Unity AI Behaviour Tree library inspired by  [Fluent-Behaviour-Tree](https://
 
 ## Installation
 
-Get release dll from [here]|(https://github.com/mhjort/aivo/releases/download/0.0.1/aivo-0.0.1.dll).
+Get release dll from [here](https://github.com/mhjort/aivo/releases/download/0.0.1/aivo-0.0.1.dll).
 
 ## Usage
 
