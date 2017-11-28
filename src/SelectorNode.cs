@@ -5,6 +5,7 @@ namespace AivoTree
     public class SelectorNode<T> : TreeNode<T>
     {
         private readonly TreeNode<T>[] _nodes;
+        private TreeNode<T> runningNode;
 
         public SelectorNode(params TreeNode<T>[] nodes)
         {
@@ -13,11 +14,23 @@ namespace AivoTree
         
         public AivoTreeStatus Tick(int frame, T context)
         {
-            return _nodes.Aggregate(AivoTreeStatus.Failure, (acc, curr) =>
+            var nodesToSearch = runningNode == null
+                ? _nodes
+                : _nodes.SkipWhile(node => node != runningNode);
+            return nodesToSearch.Aggregate(AivoTreeStatus.Failure, (acc, curr) =>
             {
                 if (acc != AivoTreeStatus.Success)       
                 {
-                    return curr.Tick(frame, context);
+                    var result = curr.Tick(frame, context);
+                    if (result == AivoTreeStatus.Running)
+                    {
+                        runningNode = curr;
+                    }
+                    else
+                    {
+                        runningNode = null;
+                    }
+                    return result;
                 }
                 return acc;
             });

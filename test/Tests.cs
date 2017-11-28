@@ -7,7 +7,7 @@ namespace Test
     public class Tests
     {
         [Test]
-        public void RunsActioNode()
+        public void RunsActionNode()
         {
             var model = new MyModel();
             var action = new ActionNode<MyModel>((frame, ctx) =>
@@ -36,6 +36,15 @@ namespace Test
         }
         
         [Test]
+        public void SequenceNodeContinuesWithCurrentlyRunningNodeWithNextTick()
+        {
+            var model = new MyModel();
+            var sequence = new SequenceNode<MyModel>(new SucceedOnceNode(), new RunOnceAndSucceedNextNode(), new FailingNode());
+            Assert.AreEqual(AivoTreeStatus.Running, sequence.Tick(1, model));
+            Assert.AreEqual(AivoTreeStatus.Failure, sequence.Tick(2, model));
+        }
+        
+        [Test]
         public void SelectorNodeSucceedSWithFirstSucceedingNode()
         {
             var model = new MyModel();
@@ -49,6 +58,15 @@ namespace Test
             var model = new MyModel();
             var sequence = new SelectorNode<MyModel>(new FailingNode());
             Assert.AreEqual(AivoTreeStatus.Failure, sequence.Tick(1, model));
+        }
+        
+        [Test]
+        public void SelectorNodeContinuesWithCurrentlyRunningNodeWithNextTick()
+        {
+            var model = new MyModel();
+            var sequence = new SelectorNode<MyModel>(new FailOnceNode(), new RunOnceAndSucceedNextNode());
+            Assert.AreEqual(AivoTreeStatus.Running, sequence.Tick(1, model));
+            Assert.AreEqual(AivoTreeStatus.Success, sequence.Tick(2, model));
         }
     }
 
@@ -70,6 +88,51 @@ namespace Test
         public AivoTreeStatus Tick(int frame, MyModel context)
         {
             return AivoTreeStatus.Success;
+        }
+    }
+    
+    public class RunOnceAndSucceedNextNode : TreeNode<MyModel>
+    {
+        private bool alreadyRun;
+        
+        public AivoTreeStatus Tick(int frame, MyModel context)
+        {
+            if (!alreadyRun)
+            {
+                alreadyRun = true;
+                return AivoTreeStatus.Running;
+            }
+            return AivoTreeStatus.Success;
+        }
+    }
+    
+    public class FailOnceNode : TreeNode<MyModel>
+    {
+        private bool alreadyRun;
+        
+        public AivoTreeStatus Tick(int frame, MyModel context)
+        {
+            if (!alreadyRun)
+            {
+                alreadyRun = true;
+                return AivoTreeStatus.Failure;
+            }
+            throw new AssertionException("Should not be called");
+        }
+    }
+    
+    public class SucceedOnceNode : TreeNode<MyModel>
+    {
+        private bool alreadyRun;
+        
+        public AivoTreeStatus Tick(int frame, MyModel context)
+        {
+            if (!alreadyRun)
+            {
+                alreadyRun = true;
+                return AivoTreeStatus.Success;
+            }
+            throw new AssertionException("Should not be called");
         }
     }
     
