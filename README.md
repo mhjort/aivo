@@ -1,6 +1,6 @@
 # aivo
 
-Aivo is a simple C# Code Driven library for implementing game AI. It uses .Net 3.5 and is compatible with Unity. It is inspired by  [Fluent-Behaviour-Tree](https://github.com/codecapers/Fluent-Behaviour-Tree/blob/master/src/BehaviourTreeStatus.cs) & [Java Behaviour Trees](https://github.com/gaia-ucm/jbt). 
+Aivo is a simple C# Code Driven library for implementing game AI. It uses .Net 3.5 and is compatible with Unity. It is inspired by  [Fluent-Behaviour-Tree](https://github.com/codecapers/Fluent-Behaviour-Tree/blob/master/src/BehaviourTreeStatus.cs) & [Java Behaviour Trees](https://github.com/gaia-ucm/jbt). The goal of this library is to make it easy to compose different kinds of behaviours by reusing the pieces as much as possible.
 
 Introduction to Behaviour Trees can be found from [here](https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php) about behaviour trees for game AI.
 
@@ -62,3 +62,43 @@ A selector visits child nodes in sequence until it finds one that succeeds. For 
 ```
 new SelectorNode<Context>(choice1, choice2, choice3);
 ```
+
+### Leaf Nodes
+
+#### ActionNode
+
+Action nodes run a single command, update the state in context and return the Tree status. Command is defined as a function that takes in a game tick (see Game Time later on) and the context (see Data Context later). 
+
+```
+var lessUnitsThanOpponent = new ActionNode<Context>((timeTick, ctx) =>
+{
+    var playerUnits = ctx.gameModel.PlayerUnits();
+    var opponentUnits = ctx.gameModel.OpponentUnits();
+
+    if (playerUnits.Count() < opponentUnits.Count())
+    {
+        return AivoTreeStatus.Success;
+    }
+        return AivoTreeStatus.Failure;
+});
+```
+
+### Data Context
+
+As the goal of the library is to make it easy to reuse parts of trees it is not encouraged to access global variables from the nodes. Instead the user defined context object is passed to all the nodes . The node should read the latest state from the context object and update the context accordingly. 
+
+Data context is highly dependent on the case so there are no limits for it. It is just class that you can define.
+
+For example:
+
+```
+public class MyContext
+{
+    public String selectedTargetToAttack;
+    public GameModel gameModel;
+}
+```
+
+### Game time
+
+You should pass game time for every ```Tick``` call. The time can be absolute time (for example in ms) or game frame number. This depends on your implementation. However, Aivo expects that number increases with every tick at least by one.
