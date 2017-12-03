@@ -8,7 +8,7 @@ Currently Aivo implements the only basic set of Behaviour Tree Node types.
 
 ## Installation
 
-Get release dll from [here](https://github.com/mhjort/aivo/releases/download/0.0.1/aivo-0.0.1.dll).
+Get release dll from [here](https://github.com/mhjort/aivo/releases/download/0.0.2/aivo-0.0.2.dll).
 
 ## Usage
 
