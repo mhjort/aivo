@@ -68,6 +68,14 @@ namespace Test
             Assert.AreEqual(AivoTreeStatus.Running, sequence.Tick(1, model));
             Assert.AreEqual(AivoTreeStatus.Success, sequence.Tick(2, model));
         }
+
+        [Test]
+        public void InverterNodeInvertsFailSuccessStateTheResul()
+        {
+            Assert.AreEqual(AivoTreeStatus.Success, new InverterNode<MyModel>(new FailingNode()).Tick(1, new MyModel()));
+            Assert.AreEqual(AivoTreeStatus.Failure, new InverterNode<MyModel>(new SucceedingNode()).Tick(1, new MyModel()));
+            Assert.AreEqual(AivoTreeStatus.Running, new InverterNode<MyModel>(new RunOnceAndSucceedNextNode()).Tick(1, new MyModel()));
+        }
     }
 
     public class MyModel
