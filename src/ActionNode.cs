@@ -4,16 +4,16 @@ namespace AivoTree
 {
     public class ActionNode<T> : TreeNode<T>
     {
-        private readonly Func<int, T, AivoTreeStatus> _fn;
+        private readonly Func<long, T, AivoTreeStatus> _fn;
 
-        public ActionNode(Func<int, T, AivoTreeStatus> fn)
+        public ActionNode(Func<long, T, AivoTreeStatus> fn)
         {
             _fn = fn;
         }
         
-        public AivoTreeStatus Tick(int frame, T context)
+        public AivoTreeStatus Tick(long timeTick, T context)
         {
-            return _fn(frame, context);
+            return _fn(timeTick, context);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AivoTree
             _nodes = nodes;
         }
 
-        public AivoTreeStatus Tick(int frame, T context)
+        public AivoTreeStatus Tick(long timeTick, T context)
         {
             var nodesToSearch = runningNode == null
                 ? _nodes
@@ -22,7 +22,7 @@ namespace AivoTree
             {
                 if (acc == AivoTreeStatus.Success)
                 {
-                    var result = curr.Tick(frame, context);
+                    var result = curr.Tick(timeTick, context);
                     if (result == AivoTreeStatus.Running)
                     {
                         runningNode = curr;

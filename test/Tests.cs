@@ -72,12 +72,12 @@ namespace Test
 
     public class MyModel
     {
-        public int value;
+        public long value;
     }
 
     public class FailingNode : TreeNode<MyModel>
     {
-        public AivoTreeStatus Tick(int frame, MyModel context)
+        public AivoTreeStatus Tick(long timeTick, MyModel context)
         {
             return AivoTreeStatus.Failure;
         }
@@ -85,7 +85,7 @@ namespace Test
     
     public class SucceedingNode : TreeNode<MyModel>
     {
-        public AivoTreeStatus Tick(int frame, MyModel context)
+        public AivoTreeStatus Tick(long timeTick, MyModel context)
         {
             return AivoTreeStatus.Success;
         }
@@ -95,7 +95,7 @@ namespace Test
     {
         private bool alreadyRun;
         
-        public AivoTreeStatus Tick(int frame, MyModel context)
+        public AivoTreeStatus Tick(long timeTick, MyModel context)
         {
             if (!alreadyRun)
             {
@@ -110,7 +110,7 @@ namespace Test
     {
         private bool alreadyRun;
         
-        public AivoTreeStatus Tick(int frame, MyModel context)
+        public AivoTreeStatus Tick(long timeTick, MyModel context)
         {
             if (!alreadyRun)
             {
@@ -125,7 +125,7 @@ namespace Test
     {
         private bool alreadyRun;
         
-        public AivoTreeStatus Tick(int frame, MyModel context)
+        public AivoTreeStatus Tick(long timeTick, MyModel context)
         {
             if (!alreadyRun)
             {
@@ -138,7 +138,7 @@ namespace Test
     
     public class ShouldNotRunNode : TreeNode<MyModel>
     {
-        public AivoTreeStatus Tick(int frame, MyModel context)
+        public AivoTreeStatus Tick(long timeTick, MyModel context)
         {
             throw new AssertionException("Should not be called");
         }
