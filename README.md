@@ -110,3 +110,17 @@ public class MyContext
 ### Game time
 
 You should pass game time for every ```Tick``` call. The time can be absolute time (for example in ms) or game frame number. This depends on your implementation. However, Aivo expects that number increases with every tick at least by one.
+
+## Roadmap
+
+The short term goal is to add support for random order selectors and sequences. Also the current version is not performance optimized yet.
+
+## Contribute
+
+Use [GitHub issues](https://github.com/mhjort/aivo/issues) and [Pull Requests](https://github.com/mhjort/aivo/pulls).
+
+## License
+
+Copyright (C) 2017 Markus Hjort
+
+Distributed under the MIT License.
