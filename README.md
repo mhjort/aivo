@@ -63,6 +63,14 @@ A selector visits child nodes in sequence until it finds one that succeeds. For 
 new SelectorNode<Context>(choice1, choice2, choice3);
 ```
 
+#### Inverter
+
+A invertor inverts the result of the node. If the node beeing inverted returns ```running``` inverter returns ```running``` too.
+
+```
+new InverterNode<Context>(node);
+```
+
 ### Leaf Nodes
 
 #### ActionNode
