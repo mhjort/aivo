@@ -76,6 +76,14 @@ namespace Test
             Assert.AreEqual(AivoTreeStatus.Failure, new InverterNode<MyModel>(new SucceedingNode()).Tick(1, new MyModel()));
             Assert.AreEqual(AivoTreeStatus.Running, new InverterNode<MyModel>(new RunOnceAndSucceedNextNode()).Tick(1, new MyModel()));
         }
+
+        [Test]
+        public void PicksOneRandomly()
+        {
+            Assert.AreEqual(0, Weighted.RandomIndexByWeight(new[]{1, 2}, (start, end) => start));
+            Assert.AreEqual(1, Weighted.RandomIndexByWeight(new[]{1, 2}, (start, end) => start + 1));
+            Assert.AreEqual(1, Weighted.RandomIndexByWeight(new[]{1, 2}, (start, end) => start + 2));
+        }
     }
 
     public class MyModel
